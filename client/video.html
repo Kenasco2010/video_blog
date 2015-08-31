@@ -1,0 +1,76 @@
+<template name="videoUpload">
+    <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        {{> quickForm collection="Videos" id="insertvideoForm" type="insert"}}
+        <!--{{#autoForm id="insertForm" type="insert" collection="Videos"}}-->
+            <!--{{> afQuickField name="name"}}-->
+            <!--{{> afQuickField name="description"}}-->
+            <!--{{> afQuickField name="video"}}-->
+            <!--{{> afQuickField name="fileId" type="cfs-file" collection="files"}}-->
+            <!--<button type="submit">Submit</button>-->
+        <!--{{/autoForm}}-->
+        {{#each files}}
+            {{#unless this.isUploaded}}
+                {{> FS.UploadProgressBar}}
+            {{/unless}}
+        {{/each}}
+        {{> FS.UploadProgressBar bootstrap=true}}
+    </div>
+    </div>
+    {{> show}}
+</template>
+
+<template name="show">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-3">
+            {{#each showVideos}}
+                <table>
+                    <tbody>
+                    <td>
+                        <tr>
+                            {{name}}
+                        </tr>
+                        <tr>
+                            {{description}}
+                        </tr>
+                        <tr>
+                            {{video}}
+                        </tr>
+                        <tr>
+                            {{createdAt}}
+                        </tr>
+                        <tr>
+                            {{#with FS.GetFile "files" videoUpload}}
+                                <!--{{debug this}}-->
+                                <!--{{#if isImage this.copies.fileStore.type }}-->
+
+
+                                    <!--<img src="{{geturl this._id }}" alt=""/>-->
+                                <video width="600" height="500" controls>
+                                    <source src="{{geturl this._id }}" type="video/mp4">
+
+                                    Your browser does not support HTML5 video.
+                                </video>
+
+
+
+
+
+
+
+                                    <!--<a href="{{geturl this._id }}">{{this.copies.files.name}}</a>-->
+                                <!--{{/if}}-->
+                            {{/with}}
+                            <!--{{videoUpload}}-->
+
+                        </tr>
+                    </td>
+                    </tbody>
+                </table>
+                <hr/>
+            {{/each}}
+        </div>
+    </div>
+
+
+</template>
